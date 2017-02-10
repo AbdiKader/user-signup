@@ -19,7 +19,7 @@ import re
 from string import letters
 
 import webapp2
-def page_builder(username_error='', password_error='', password_erroru='', email_error=''):
+def page_builder(username ='',username_error='', password_error='', password_erroru='', email_error=''):
 	header = """
 	<!DOCTYPE html>
 	<html>
@@ -33,7 +33,7 @@ def page_builder(username_error='', password_error='', password_erroru='', email
 	<table>
 		<tr>
 			<td>Username</td>
-			<td><input type='text' name='username'></td>
+			<td><input type='text' name='username' value='%(username)s'></td>
 			<td style="color:red">%(username_error)s</td>
 		</tr>
 		<tr>
@@ -60,7 +60,7 @@ def page_builder(username_error='', password_error='', password_erroru='', email
 	</body>
 	</html>
 	"""
-	body = body %{"username_error":username_error, "password_error":password_error, "password_erroru":password_erroru, "email_error":email_error}
+	body = body %{"username":username,"username_error":username_error, "password_error":password_error, "password_erroru":password_erroru, "email_error":email_error}
 	
 	content = header+body+footer
 	return content
@@ -114,9 +114,9 @@ class Signup(webapp2.RequestHandler):
             have_error = True
 
         if have_error:
-            self.response.write(page_builder(username_error,password_error,password_erroru,email_error))
+            self.response.write(page_builder(username,username_error,password_error,password_erroru,email_error))
         else:
-            self.redirect('/welcome?username=' + username)
+            self.redirect('/welcome?username='+username)
 
 	
 
